@@ -1,0 +1,87 @@
+import { GameSettings, Product, RankingMetric, Segment } from './engine.types'
+
+export const PRODUCTS: Product[] = ['A', 'B']
+export const SEGMENTS: Segment[] = ['PRICE', 'QUALITY']
+export const BALANCE_TOLERANCE = 0.01
+
+export const DEFAULT_GAME_SETTINGS: GameSettings = {
+  cycles: 8,
+  seed: 1,
+  initial: {
+    cash: 100_000,
+    capacity: 1_000,
+    materials: { A: 500, B: 500 },
+    shares: 15_900,
+    shareParValue: 10,
+  },
+  production: {
+    moduleUnits: 1_000,
+    moduleCostPerUnit: 50,
+    depreciationRate: 0.025,
+    materialCost: { A: 8, B: 10 },
+    laborCost: { A: 3, B: 5 },
+    variableOverhead: { A: 5, B: 7 },
+    capacityUsage: { A: 1, B: 1 },
+  },
+  market: {
+    targetUtilization: 0.85,
+    growth: 0.05,
+    growthNoise: 0.02,
+    elasticity: 1.2,
+    refPrice: { A: 30, B: 40 },
+    baseQuality: { A: 1, B: 1.6 },
+    qualityDecay: 0.25,
+    marketingDecay: 0.5,
+    qualityHalfSaturation: 4_000,
+    marketingHalfSaturation: 2_000,
+    noiseSigma: 0.08,
+    substitutionRate: 0.6,
+    latentDemandRate: 0.3,
+    stockoutReputationLoss: 0.2,
+    segments: {
+      PRICE: { weight: 0.6, quality: 0.5, marketing: 1, price: 3 },
+      QUALITY: { weight: 0.4, quality: 2, marketing: 1, price: 1.6 },
+    },
+    economySegmentShift: 0.5,
+    priceSegmentBounds: [0.4, 0.8],
+  },
+  economy: {
+    drift: 0.005,
+    volatility: 0.02,
+    forecastNoiseQuarter: 0.01,
+    forecastNoiseYear: 0.04,
+  },
+  costs: {
+    adminFixed: 1_000,
+    adminVariableRate: 0.03,
+    adminNoise: 0.1,
+    holdingCost: { finished: 0.5, materials: 0.2 },
+    marketResearchCost: 600,
+  },
+  finance: {
+    shortTermRate: 0.03,
+    emergencyRate: 0.06,
+    emergencyBuffer: 0.05,
+    longTermAnnualRate: 0.12,
+    longTermQuarters: 20,
+    prepaymentPenalty: 0,
+    creditLimitMultiple: 1.5,
+    securitiesRate: 0.012,
+    taxRate: 0.3,
+    lossCarryForwardMaxCycles: null,
+    lossCarryForwardMaxOffset: 1,
+    issueDiscount: 0.1,
+    issueCost: 0.03,
+    costOfEquity: 0.15,
+    legalReserveEnabled: false,
+    legalReserveRate: 0.1,
+    legalReserveCap: 0.2,
+    priceToBookBounds: [0.3, 4],
+    priceSensitivity: 0.5,
+  },
+  bankruptcy: {
+    emergencyStreakLimit: 3,
+    insolvencyLossRatio: 1 / 3,
+  },
+  rankingMetric: RankingMetric.TSR,
+}

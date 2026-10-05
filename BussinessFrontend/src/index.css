@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  --color-brand-50: #f5f3ff;
+  --color-brand-100: #ede9fe;
+  --color-brand-200: #ddd6fe;
+  --color-brand-300: #c4b5fd;
+  --color-brand-400: #a78bfa;
+  --color-brand-500: #8b5cf6;
+  --color-brand-600: #7c3aed;
+  --color-brand-700: #6d28d9;
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #4c1d95;
+  --color-brand-950: #2e1065;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-wiggle: wiggle 1.2s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+  }
+}
+
+@layer base {
+  html, body, #root {
+    min-height: 100%;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .stage-bg {
+    @apply bg-gradient-to-br from-brand-900 via-brand-700 to-fuchsia-600 text-white;
+  }
+  .stage {
+    @apply min-h-screen bg-gradient-to-br from-brand-900 via-brand-700 to-fuchsia-600 text-white;
+  }
+  .card {
+    @apply rounded-3xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] ring-1 ring-slate-900/5;
+  }
+  .glass {
+    @apply rounded-3xl bg-white/10 ring-1 ring-white/20 backdrop-blur-md;
+  }
+}
+
+/* Range slider styling shared by every decision control */
+input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--track-fill, #7c3aed) 0%, var(--track-fill, #7c3aed) var(--fill, 0%), #e2e8f0 var(--fill, 0%), #e2e8f0 100%);
+  outline: none;
+}
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: white;
+  border: 4px solid var(--track-fill, #7c3aed);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+  cursor: grab;
+  transition: transform 0.15s;
+}
+input[type="range"].slider::-webkit-slider-thumb:active {
+  transform: scale(1.15);
+  cursor: grabbing;
+}
+input[type="range"].slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: white;
+  border: 4px solid var(--track-fill, #7c3aed);
+  cursor: grab;
+}
