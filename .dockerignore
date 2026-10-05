@@ -1,0 +1,14 @@
+# Shared by both images: the Docker build context is the repository root
+**/node_modules
+**/dist
+**/coverage
+**/*.tsbuildinfo
+**/.env
+**/.env.*
+!**/.env.example
+**/npm-debug.log*
+.git
+BussinessBackend/.data
+BusinessModel
+BussinessModelFrontend
+mms-nest-structure

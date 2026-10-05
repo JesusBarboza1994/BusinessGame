@@ -40,9 +40,10 @@ El puerto se cambia con `PORT=...` y la API destino con `API_TARGET=...`. En pro
 
 La imagen compila con Vite y sirve los archivos estáticos con nginx (con fallback del SPA y health check en `/healthz`). nginx escucha en el `PORT` que inyecta Railway.
 
-1. Crea el servicio **Frontend** en el mismo proyecto que el backend:
-   - Desde GitHub: **Root Directory** = `BussinessFrontend` y **Config file path** = `/BussinessFrontend/railway.json`.
-   - Sin GitHub, desde esta carpeta: `railway up --service Frontend`.
+1. Crea el servicio **Frontend** en el mismo proyecto que el backend, desde el repo de GitHub:
+   - **Root Directory: vacío.** El contexto del build es la raíz del monorepo.
+   - **Railway Config File:** `/BussinessFrontend/railway.json`.
+   - Si existe la variable `RAILWAY_DOCKERFILE_PATH`, bórrala.
 2. Agrega la variable `VITE_API_URL` = `https://${{Backend.RAILWAY_PUBLIC_DOMAIN}}`. Es la URL pública del backend, sin `/v1` y sin barra final.
    - Se usa **en el build**. Si la cambias, vuelve a desplegar.
 3. En **Settings → Networking → Generate Domain**, crea el dominio público. Pon ese dominio en el `CORS_ORIGIN` del backend.
@@ -50,6 +51,7 @@ La imagen compila con Vite y sirve los archivos estáticos con nginx (con fallba
 Para probar la imagen en local:
 
 ```bash
-docker build --build-arg VITE_API_URL=http://localhost:4000 -t bsim-frontend .
+# desde la raíz del repo
+docker build -f BussinessFrontend/Dockerfile --build-arg VITE_API_URL=http://localhost:4000 -t bsim-frontend .
 docker run -p 8080:8080 bsim-frontend
 ```

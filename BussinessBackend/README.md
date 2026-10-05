@@ -82,9 +82,10 @@ Todas las respuestas usan el formato `{ success, code, message, data }`. Los err
 El backend y el frontend se despliegan como **dos servicios separados**. Cada uno tiene su propio `Dockerfile` y `railway.json`.
 
 1. En el proyecto de Railway, agrega un servicio **Redis** (New → Database → Redis).
-2. Crea el servicio **Backend**:
-   - Desde GitHub: **Root Directory** = `BussinessBackend` y **Config file path** = `/BussinessBackend/railway.json`.
-   - Sin GitHub, desde esta carpeta: `railway up --service Backend`.
+2. Crea el servicio **Backend** desde el repo de GitHub:
+   - **Root Directory: vacío.** El contexto del build es la raíz del monorepo, y el Dockerfile copia `BussinessBackend/`.
+   - **Railway Config File:** `/BussinessBackend/railway.json`. Este archivo define `dockerfilePath` y `watchPatterns`, así que solo redespliega cuando cambia esta carpeta.
+   - Si existe la variable `RAILWAY_DOCKERFILE_PATH`, bórrala.
 3. Configura sus variables (ver `.env.example`):
 
    | Variable | Valor |
@@ -101,6 +102,7 @@ El backend y el frontend se despliegan como **dos servicios separados**. Cada un
 Para probar la imagen en local:
 
 ```bash
-docker build -t bsim-backend .
-docker run -p 4000:4000 --env-file .env bsim-backend
+# desde la raíz del repo
+docker build -f BussinessBackend/Dockerfile -t bsim-backend .
+docker run -p 4000:4000 --env-file BussinessBackend/.env bsim-backend
 ```

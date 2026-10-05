@@ -1,13 +1,14 @@
 # syntax=docker/dockerfile:1
+# Build context is the REPOSITORY ROOT (monorepo): docker build -f BussinessBackend/Dockerfile .
 
 # ---- build: install everything, compile with Nest (SWC + type check)
 FROM node:22-bookworm-slim AS build
 WORKDIR /app
 # mongodb-memory-server is a dev-only tool; skip its ~80MB MongoDB download
 ENV MONGOMS_DISABLE_POSTINSTALL=1
-COPY package.json package-lock.json ./
+COPY BussinessBackend/package.json BussinessBackend/package-lock.json ./
 RUN npm ci
-COPY . .
+COPY BussinessBackend/ ./
 RUN npm run build && npm prune --omit=dev
 
 # ---- runtime: only production deps and the compiled output
